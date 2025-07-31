@@ -1,0 +1,9 @@
+[
+  {
+    "name": "ESP32 Spotify playback controller",
+    "description": "ESP32 with a tft spi display and 3 tactile switches which can control the spotify api",
+    "image": "aboutme/images/esp32-spotify-proj",
+    "url": "https://github.com/koenll23/esp32-spotify-controller",
+    "urlLabel": "View on GitHub"
+  }
+]
