@@ -1,53 +1,484 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Koen - About Me 💻🔥</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>koenll23 - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating particles background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            animation: slideInFromTop 1s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #fff, #f0f8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes textGlow {
+            from {
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+            }
+            to {
+                filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
+            }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        section {
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .skills-container, .hobbies-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            perspective: 1000px;
+            margin-bottom: 2rem;
+        }
+
+        .skill, .hobby {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 1rem 2rem;
+            color: white;
+            border-radius: 2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            animation: skillAppear 0.6s ease-out backwards;
+        }
+
+        .hobby {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .skill::before, .hobby::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .skill:hover, .hobby:hover {
+            transform: translateY(-10px) rotateX(15deg) scale(1.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .skill:hover {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .hobby:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .skill:hover::before, .hobby:hover::before {
+            left: 100%;
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2rem;
+            padding: 2rem;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            color: white;
+            animation: cardSlideIn 0.8s ease-out backwards;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-card p {
+            position: relative;
+            z-index: 2;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-link {
+            color: #f093fb;
+            text-decoration: none;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 2rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 10;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Staggered animations */
+        .skill:nth-child(1), .hobby:nth-child(1) { animation-delay: 0.1s; }
+        .skill:nth-child(2), .hobby:nth-child(2) { animation-delay: 0.2s; }
+        .skill:nth-child(3), .hobby:nth-child(3) { animation-delay: 0.3s; }
+        .skill:nth-child(4), .hobby:nth-child(4) { animation-delay: 0.4s; }
+        .skill:nth-child(5), .hobby:nth-child(5) { animation-delay: 0.5s; }
+        .skill:nth-child(6), .hobby:nth-child(6) { animation-delay: 0.6s; }
+        .skill:nth-child(7), .hobby:nth-child(7) { animation-delay: 0.7s; }
+
+        .project-card:nth-child(1) { animation-delay: 0.2s; }
+        .project-card:nth-child(2) { animation-delay: 0.4s; }
+        .project-card:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes skillAppear {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes cardSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px) rotateY(-15deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotateY(0deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 2rem 1rem;
+            }
+            
+            .projects-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-out;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Hi, I'm Koen! 😄⚡</h1>
-    <p>Passionate about ESP32, microcontrollers, hitting the gym, and cooking! 🍳🤖</p>
-  </header>
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
 
-  <section id="skills">
-    <h2>💪 My Skills</h2>
-    <div class="skills-container">
-      <span class="skill">HTML</span>
-      <span class="skill">CSS</span>
-      <span class="skill">JavaScript</span>
-      <span class="skill">React</span>
-      <span class="skill">Python</span>
-      <span class="skill">C</span>
-      <span class="skill">C#</span>
-      <span class="skill">JSON</span>
-      <span class="skill">ESP32 and similar microcontrollers</span>
-    </div>
-  </section>
+    <header>
+        <h1>koenll23</h1>
+        <p class="subtitle">Developer • Creator • Problem Solver</p>
+    </header>
 
-  <section id="projects">
-    <h2>🚀 Recent Projects</h2>
-    <div class="projects-container" id="projects-container">
-      <!-- Projects from JSON will be loaded here -->
-    </div>
-  </section>
+    <section class="animate-on-scroll">
+        <h2 class="section-title">Skills & Expertise</h2>
+        <div class="skills-container">
+            <div class="skill">JavaScript</div>
+            <div class="skill">React</div>
+            <div class="skill">Python</div>
+            <div class="skill">Node.js</div>
+            <div class="skill">CSS</div>
+            <div class="skill">UI/UX Design</div>
+            <div class="skill">ESP32</div>
+        </div>
+    </section>
 
-  <section id="hobbies">
-    <h2>🎮 Hobbies</h2>
-    <ul>
-      <li>Electronics & tinkering with ESP32s ⚡🔧</li>
-      <li>Helping others with tech 💡🙌</li>
-      <li>Cooking delicious food 😋</li>
-      <li>Hitting the Gym 👟💪</li>
-    </ul>
-  </section>
+    <section class="animate-on-scroll">
+        <h2 class="section-title">Hobbies & Interests</h2>
+        <div class="hobbies-container">
+            <div class="hobby">Electronics</div>
+            <div class="hobby">Coding</div>
+            <div class="hobby">Hitting the Gym</div>
+            <div class="hobby">Going on Walks</div>
+            <div class="hobby">Cooking</div>
+        </div>
+    </section>
 
-  <footer>
-    <p>Made with ❤️ by Koen - 2025</p>
-  </footer>
+    <section class="animate-on-scroll">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-container">
+            <div class="project-card">
+                <h3>Lorem ipsum, I forgor how it goes</h3>
+                <p>Lorem ipsum, I forgor how it goes</p>
+                <a href="#" class="project-link">Lorem ipsum, I forgor how it goes</a>
+            </div>
+            <div class="project-card">
+                <h3>Lorem ipsum, I forgor how it goes</h3>
+                <p>Lorem ipsum, I forgor how it goes</p>
+                <a href="#" class="project-link">Lorem ipsum, I forgor how it goes</a>
+            </div>
+            <div class="project-card">
+                <h3>Lorem ipsum, I forgor how it goes</h3>
+                <p>Lorem ipsum, I forgor how it goes</p>
+                <a href="#" class="project-link">Lorem ipsum, I forgor how it goes</a>
+            </div>
+        </div>
+    </section>
 
-  <script src="script.js"></script>
+    <footer>
+        <p>&copy; 2025 koenll23. Built with passion and cutting-edge web technologies.</p>
+    </footer>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Scroll animations
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // Add mouse movement parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle, index) => {
+                const speed = (index % 5 + 1) * 0.5;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+                particle.style.transform += ` translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            handleScrollAnimations();
+        });
+
+        // Add click effects to skills and hobbies
+        document.querySelectorAll('.skill, .hobby').forEach(item => {
+            item.addEventListener('click', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'skillAppear 0.6s ease-out';
+                }, 10);
+            });
+        });
+    </script>
 </body>
 </html>
